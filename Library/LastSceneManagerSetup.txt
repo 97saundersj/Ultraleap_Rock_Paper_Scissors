@@ -1,0 +1,5 @@
+sceneSetups:
+- path: Assets/Rigged Hands (VR).unity
+  isLoaded: 1
+  isActive: 1
+  isSubScene: 0
