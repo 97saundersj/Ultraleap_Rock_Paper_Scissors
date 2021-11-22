@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GestureListener : MonoBehaviour
+public class GameController : MonoBehaviour
 {
     public TextMesh Text;
     public RiggedHand hand;
