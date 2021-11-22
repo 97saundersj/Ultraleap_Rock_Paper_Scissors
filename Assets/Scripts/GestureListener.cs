@@ -29,6 +29,14 @@ public class GestureListener : MonoBehaviour
 
             if(hand.IsTracked)
             {
+                var poseDictionary = new Dictionary<string, float>();
+                poseDictionary.Add("rockStrength", GetRockStrength(hand.GetLeapHand()));
+                poseDictionary.Add("paperStrength", GetPaperStrength(hand.GetLeapHand()));
+                poseDictionary.Add("sissorsStrength", GetSissorsStrength(hand.GetLeapHand()));
+                poseDictionary.Add("fuStrength", GetFUStrength(hand.GetLeapHand()));
+
+                poseDictionary.Values.toList();
+
                 var rockStrength = GetRockStrength(hand.GetLeapHand());
                 var paperStrength = GetPaperStrength(hand.GetLeapHand());
                 var sissorsStrength = GetSissorsStrength(hand.GetLeapHand());
@@ -140,6 +148,4 @@ public class GestureListener : MonoBehaviour
               + Vector3.Dot(hand.Fingers[0].Direction.ToVector3(), -hand.RadialAxis())
               ).Map(-5, 5, 0, 1);
     }
-
-
 }
