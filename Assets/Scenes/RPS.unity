@@ -963,7 +963,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 102953966384517670, guid: 81a58ec9c7a7a4fababa39069949658f, type: 3}
       propertyPath: m_Text
-      value: Put your middle finger up to start!
+      value: Thumbs up to start!
       objectReference: {fileID: 0}
     - target: {fileID: 102953966384517670, guid: 81a58ec9c7a7a4fababa39069949658f, type: 3}
       propertyPath: m_FontSize
