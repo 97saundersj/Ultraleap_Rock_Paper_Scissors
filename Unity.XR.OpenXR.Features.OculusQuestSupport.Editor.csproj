@@ -9,10 +9,10 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{908F93F6-9C8C-90B1-1D15-8DFB4AFEA944}</ProjectGuid>
+    <ProjectGuid>{8E08E665-B53A-57BD-BF58-004B3CD8B365}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <AssemblyName>Unity.XR.OpenXR.Features.RuntimeDebugger.Editor</AssemblyName>
+    <AssemblyName>Unity.XR.OpenXR.Features.OculusQuestSupport.Editor</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>.</BaseDirectory>
@@ -56,11 +56,10 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Library\PackageCache\com.unity.xr.openxr@1.2.8\RuntimeDebugger\Editor\RuntimeDebuggerWindow.cs" />
-    <Compile Include="Library\PackageCache\com.unity.xr.openxr@1.2.8\RuntimeDebugger\Editor\RuntimeDebuggerOpenXRFeatureEditor.cs" />
+    <Compile Include="Library\PackageCache\com.unity.xr.openxr@1.2.8\OculusQuest\Editor\ModifyAndroidManifestOculus.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Library\PackageCache\com.unity.xr.openxr@1.2.8\RuntimeDebugger\Editor\Unity.XR.OpenXR.Features.RuntimeDebugger.Editor.asmdef" />
+    <None Include="Library\PackageCache\com.unity.xr.openxr@1.2.8\OculusQuest\Editor\Unity.XR.OpenXR.Features.OculusQuestSupport.Editor.asmdef" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -698,17 +697,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="Unity.XR.OpenXR.Features.RuntimeDebugger.csproj">
-      <Project>{D4942329-0A3E-E023-9EF3-9D47E604FE15}</Project>
-      <Name>Unity.XR.OpenXR.Features.RuntimeDebugger</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.XR.OpenXR.csproj">
-      <Project>{0D04920A-50EA-A65C-9285-FB9E66A78208}</Project>
-      <Name>Unity.XR.OpenXR</Name>
-    </ProjectReference>
     <ProjectReference Include="Unity.XR.OpenXR.Editor.csproj">
       <Project>{F398A8E7-4243-57CB-A3E0-A2E1C462C489}</Project>
       <Name>Unity.XR.OpenXR.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.XR.OpenXR.Features.OculusQuestSupport.csproj">
+      <Project>{16912948-5D39-A37A-F1DF-B5A444B2F751}</Project>
+      <Name>Unity.XR.OpenXR.Features.OculusQuestSupport</Name>
     </ProjectReference>
     <ProjectReference Include="UnityEditor.UI.csproj">
       <Project>{ADFFD08B-B8F9-D71E-8C28-5D678313CB73}</Project>

@@ -3,19 +3,21 @@ using Leap.Unity;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GestureListener : MonoBehaviour
 {
-    public TextMesh Text;
+    public TextMesh text;
     public RiggedHand hand;
+    public string selectedGesture;
     // Next update in second
     private int nextUpdate = 1;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -27,60 +29,42 @@ public class GestureListener : MonoBehaviour
             // Change the next update (current second+1)
             nextUpdate = Mathf.FloorToInt(Time.time) + 1;
 
-            if(hand.IsTracked)
+            if (hand.IsTracked)
             {
-                var poseDictionary = new Dictionary<string, float>();
-                poseDictionary.Add("rockStrength", GetRockStrength(hand.GetLeapHand()));
-                poseDictionary.Add("paperStrength", GetPaperStrength(hand.GetLeapHand()));
-                poseDictionary.Add("sissorsStrength", GetSissorsStrength(hand.GetLeapHand()));
-                poseDictionary.Add("fuStrength", GetFUStrength(hand.GetLeapHand()));
+                var gestureDictionary = new Dictionary<string, float>();
+                gestureDictionary.Add("rockStrength", GetRockStrength(hand.GetLeapHand()));
+                gestureDictionary.Add("paperStrength", GetPaperStrength(hand.GetLeapHand()));
+                gestureDictionary.Add("sissorsStrength", GetSissorsStrength(hand.GetLeapHand()));
+                gestureDictionary.Add("fuStrength", GetFUStrength(hand.GetLeapHand()));
 
-                poseDictionary.Values.toList();
+                var chosenGesture = gestureDictionary.FirstOrDefault(x => x.Value.Equals(gestureDictionary.Values.Max()));
 
-                var rockStrength = GetRockStrength(hand.GetLeapHand());
-                var paperStrength = GetPaperStrength(hand.GetLeapHand());
-                var sissorsStrength = GetSissorsStrength(hand.GetLeapHand());
-                var fuStrength = GetFUStrength(hand.GetLeapHand());
-
-                var estimatedGesture = Math.Max(rockStrength, Math.Max(paperStrength, sissorsStrength));
-                
-                if(rockStrength > paperStrength && rockStrength > sissorsStrength && rockStrength > fuStrength)
+                switch (chosenGesture.Key)
                 {
-                    Text.text = "ROCK!";
-                    Debug.Log("ROCK!");
-                }
-                else if (paperStrength > rockStrength && paperStrength > sissorsStrength && paperStrength > fuStrength)
-                {
-                    Text.text = "PAPER!";
-                    Debug.Log("PAPER!");
-                }
-                else if (sissorsStrength > rockStrength && sissorsStrength > paperStrength && sissorsStrength > fuStrength)
-                {
-                    Text.text = "SISSORS!";
-                    Debug.Log("SISSORS!");
-                }
-
-                else if (fuStrength > rockStrength && fuStrength > paperStrength && fuStrength > sissorsStrength)
-                {
-                    Text.text = "Wow, that was rude!";
-                    Debug.Log("Rude!");
+                    case "rockStrength":
+                        selectedGesture = "rock";
+                        text.text = "ROCK!";
+                        break;
+                    case "paperStrength":
+                        selectedGesture = "paper";
+                        text.text = "PAPER!";
+                        break;
+                    case "sissorsStrength":
+                        selectedGesture = "sissors";
+                        text.text = "SISSORS!";
+                        break;
+                    case "fuStrength":
+                        selectedGesture = "fu";
+                        text.text = "Wow, that was rude!";
+                        break;
                 }
             }
             else
             {
-                Text.text = "Make your choice";
-                //Debug.Log("Untracked!");
+                selectedGesture = "untracked";
+                text.text = "Make your choice";
+                Debug.Log(selectedGesture);
             }
-            /*
-            switch(estimatedGesture)
-            {
-                case rockStrength > Math.Max(paperStrength, sissorsStrength):
-                    Debug.Log("Fist Strength: " + );
-                    break;
-            }
-            */
-
-            //Debug.Log("Fist Strength: " + );
         }
     }
 
