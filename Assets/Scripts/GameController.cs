@@ -12,6 +12,7 @@ public class GameController : MonoBehaviour
     public RiggedHand hand;
 
     private string selectedGesture;
+    private bool roundFinished = true;
 
     // the start time of the round in seconds
     private float roundStartTime = -1;
@@ -27,18 +28,19 @@ public class GameController : MonoBehaviour
     {
         selectedGesture = gestureListener.selectedGesture;
         Debug.Log("current Gesture: " + selectedGesture);
-        // If the next update is reached
-        if (roundStartTime <= -1)
+        var roundTime = Mathf.FloorToInt(Time.time) - roundStartTime;
+
+        if (roundFinished && roundStartTime <= -1)
         {
             if (selectedGesture == "thumbsUp")
             {
                 gameText.text = "Round Start, make your choice.";
                 roundStartTime = Mathf.FloorToInt(Time.time);
+                roundFinished = false;
             }
         }
-        else
+        else if (!roundFinished && roundStartTime >= -1)
         {
-            var roundTime =  Mathf.FloorToInt(Time.time) - roundStartTime;
             Debug.Log("roundTime: " + roundTime);
             if (roundTime <= 1)
             {
@@ -65,14 +67,14 @@ public class GameController : MonoBehaviour
 
                 var gesturePlayer = selectedGesture;
 
-                if(gesturePlayer == "rock")
+                if (gesturePlayer == "rock" || gesturePlayer == "thumbsUp")
                 {
                     gameText.text = "You picked: Rock\n";
                     if (gestureAI == "rock")
                     {
                         gameText.text += "The AI picked: Rock\nDRAW!";
                     }
-                    else if(gestureAI == "paper")
+                    else if (gestureAI == "paper")
                     {
                         gameText.text += "The AI picked: Paper\nYOU Lose!";
                     }
@@ -114,78 +116,19 @@ public class GameController : MonoBehaviour
                     }
                 }
 
-                gameText.text += "\nThumbs Up to play agin :)";
-                 
-                //gameText.text = "You have selected{selectedGesture}";
+                roundFinished = true;
+            }
+        }
+        else if (roundFinished)
+        {
+            if (roundTime >= 9)
+            {
                 roundStartTime = -1;
+            }
+            else if (roundTime >= 8)
+            {
+                gameText.text = "\nThumbs up to play again :)";
             }
         }
     }
-
-    /// <summary>
-    /// Returns a confidence value from 0 to 1 indicating how strongly the Hand is making a fist.
-    /// </summary>
-    public static float GetRockStrength(Hand hand)
-    {
-        return (Vector3.Dot(hand.Fingers[1].Direction.ToVector3(), -hand.DistalAxis())
-              + Vector3.Dot(hand.Fingers[2].Direction.ToVector3(), -hand.DistalAxis())
-              + Vector3.Dot(hand.Fingers[3].Direction.ToVector3(), -hand.DistalAxis())
-              + Vector3.Dot(hand.Fingers[4].Direction.ToVector3(), -hand.DistalAxis())
-              + Vector3.Dot(hand.Fingers[0].Direction.ToVector3(), -hand.RadialAxis())
-              ).Map(-5, 5, 0, 1);
-    }
-
-    /// <summary>
-    /// Returns a confidence value from 0 to 1 indicating how strongly the Hand is making a fist.
-    /// </summary>
-    public static float GetPaperStrength(Hand hand)
-    {
-        return (Vector3.Dot(hand.Fingers[1].Direction.ToVector3(), hand.DistalAxis())
-              + Vector3.Dot(hand.Fingers[2].Direction.ToVector3(), hand.DistalAxis())
-              + Vector3.Dot(hand.Fingers[3].Direction.ToVector3(), hand.DistalAxis())
-              + Vector3.Dot(hand.Fingers[4].Direction.ToVector3(), hand.DistalAxis())
-              + Vector3.Dot(hand.Fingers[0].Direction.ToVector3(), hand.RadialAxis())
-              ).Map(-5, 5, 0, 1);
-    }
-
-    /// <summary>
-    /// Returns a confidence value from 0 to 1 indicating how strongly the Hand is making a fist.
-    /// </summary>
-    public static float GetSissorsStrength(Hand hand)
-    {
-        return (Vector3.Dot(hand.Fingers[1].Direction.ToVector3(), hand.DistalAxis())
-              + Vector3.Dot(hand.Fingers[2].Direction.ToVector3(), hand.DistalAxis())
-              + Vector3.Dot(hand.Fingers[3].Direction.ToVector3(), -hand.DistalAxis())
-              + Vector3.Dot(hand.Fingers[4].Direction.ToVector3(), -hand.DistalAxis())
-              + Vector3.Dot(hand.Fingers[0].Direction.ToVector3(), -hand.RadialAxis())
-              ).Map(-5, 5, 0, 1);
-    }
-
-    /// <summary>
-    /// Returns a confidence value from 0 to 1 indicating how strongly the Hand is making a fist.
-    /// </summary>
-    public static float GetFUStrength(Hand hand)
-    {
-        return (Vector3.Dot(hand.Fingers[1].Direction.ToVector3(), -hand.DistalAxis())
-              + Vector3.Dot(hand.Fingers[2].Direction.ToVector3(), hand.DistalAxis())
-              + Vector3.Dot(hand.Fingers[3].Direction.ToVector3(), -hand.DistalAxis())
-              + Vector3.Dot(hand.Fingers[4].Direction.ToVector3(), -hand.DistalAxis())
-              + Vector3.Dot(hand.Fingers[0].Direction.ToVector3(), -hand.RadialAxis())
-              ).Map(-5, 5, 0, 1);
-    }
-
-    /// <summary>
-    /// Returns a confidence value from 0 to 1 indicating how strongly the Hand is making a fist.
-    /// </summary>
-    public static float GetPointingStrength(Hand hand)
-    {
-        return (Vector3.Dot(hand.Fingers[1].Direction.ToVector3(), hand.DistalAxis())
-              + Vector3.Dot(hand.Fingers[2].Direction.ToVector3(), -hand.DistalAxis())
-              + Vector3.Dot(hand.Fingers[3].Direction.ToVector3(), -hand.DistalAxis())
-              + Vector3.Dot(hand.Fingers[4].Direction.ToVector3(), -hand.DistalAxis())
-              + Vector3.Dot(hand.Fingers[0].Direction.ToVector3(), -hand.RadialAxis())
-              ).Map(-5, 5, 0, 1);
-    }
-
-
 }
